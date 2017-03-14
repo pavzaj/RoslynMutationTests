@@ -1,0 +1,8 @@
+
+packages/*
+
+RoslynMutationTests/bin/
+
+\.vs/RoslynMutationTests/v14/\.suo
+
+RoslynMutationTests/obj/
