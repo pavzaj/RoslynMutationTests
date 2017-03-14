@@ -11,6 +11,8 @@
     [TestFixture]
     public class MutationTests
     {
+        const string calculatorCodeFilePath = @"D:\github\RoslynMutationTests\RoslynMutationTests\Calculator.cs";
+
         [Test]
         public void OriginalCodeSimpleTest()
         {
@@ -21,7 +23,7 @@
         [Test]
         public void OriginalCalculatorCodeShouldWork()
         {
-            string calcCode = File.OpenText("Calculator.cs").ReadToEnd();
+            string calcCode = File.OpenText(calculatorCodeFilePath).ReadToEnd();
             SyntaxTree syntaxTree = SyntaxFactory.ParseSyntaxTree(calcCode);
 
             var initialCompilation = CreateCompilationForSyntaxTree(syntaxTree);
@@ -32,7 +34,7 @@
         [Test]
         public void MutatedCalculatorCodeShouldWork()
         {
-            string calcCode = File.OpenText("Calculator.cs").ReadToEnd();
+            string calcCode = File.OpenText(calculatorCodeFilePath).ReadToEnd();
             SyntaxTree syntaxTree = SyntaxFactory.ParseSyntaxTree(calcCode);
             var syntaxTreeRoot = (CompilationUnitSyntax)syntaxTree.GetRoot();
 
@@ -61,7 +63,7 @@
                 "calculator.dll",
                 options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary),
                 syntaxTrees: new[] { syntaxTree },
-                references: new[] { new MetadataFileReference(typeof(object).Assembly.Location) });
+                references: new[] { MetadataReference.CreateFromFile(typeof(object).Assembly.Location) });
         }
 
         private Assembly CreateAssemblyForCompilation(CSharpCompilation compilation)
